@@ -1,0 +1,139 @@
+.header{
+  .header-fixed{
+    background-color: cl(primary);
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    // 親子構造でz-indexを使用してもうまく適用できない場合がある;
+    //その場合は、兄弟要素でz-indexを使用すればよい
+    z-index:2;
+  }
+
+  .header-logo{
+    height:50px;
+    margin-left:30px;
+    padding: 5px 0;
+    img{
+      height: 100%;
+      width: auto;
+    }
+  }
+
+  .nav-btn{
+    width:40px;
+    height: 30px;
+    // reset.cssで指定されているデフォルト値を書替え
+    appearance: none;
+    background: transparent;
+    border:none;
+    font:inherit;
+    outline:none;
+    //ここまで
+    position: relative;
+    right:30px;
+    @include overTab{
+      display: none;
+    }
+    &.-active{
+      span{
+        top:0;
+        bottom:0;
+        margin: auto;
+        transition: transform 0.3s ease;
+        &:first-child{
+          transform: rotate(45deg);
+        }
+        &:nth-child(2){
+          transform: rotate(45deg);
+        }
+        &:last-child{
+          transform: rotate(-45deg);
+        }
+      }
+    }
+    span{
+      position: absolute;
+      width:100%;
+      height:3px;
+      background-color: cl(white);
+      display:block;
+      transition:transform 0.3s ease;
+      &:first-child{
+        top:0;
+      }
+      &:nth-child(2){
+        top:0;
+        bottom:0;
+        margin:auto;
+      }
+      &:last-child{
+        bottom:0;
+      }
+    }
+  }
+
+    .nav{
+      // スマホ
+      position:fixed;
+      left:0;
+      top:0;
+      width:100%;
+      background-color: #000000CC;
+      padding-top: 145px;
+      z-index: 1;
+      opacity:0;
+      visibility:hidden;
+      transition: opacity 0.3s ease;
+      // PC
+      @include overTab{
+        // position:static;
+        width:initial;
+        background-color: transparent;
+        padding-top:0;
+        z-index: 3;
+        // 初期化
+        left:inherit;
+        //右寄せ
+        right:0;
+        top:30px;
+        transform: translateY(-50%);
+        opacity: 1;
+        visibility: visible;
+      }
+      &.-active{
+        opacity:1;
+        visibility: visible;
+        transition: opacity 0.3s ease;
+      }
+    }
+
+  .nav-list{
+    text-align: center;
+    padding-bottom: 45px;
+    @include overTab{
+      display:flex;
+      margin-right:40px;
+      padding-bottom: 0;
+    }
+    .item{
+      +.item{
+        margin-top:20px;
+        @include overTab{
+          margin-top: 0px;;
+          margin-left:20px;
+        }
+      }
+    }
+    a{
+      color:cl(white);
+      font-size: 24px;
+      @include overTab{
+        font-size: 18px;
+      }
+    }
+  }
+}
